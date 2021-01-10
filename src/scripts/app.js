@@ -245,7 +245,7 @@ destinationsListElemet.addEventListener('click', function (event) {
 const displayCustomMessage = function (message) {
   busContainerElement.innerHTML =
     `<div style="padding:10px;">
-        <p>${message}</p>
+        <p>${message}.</p>
         <p>Please, try again.</p>
     </div>`;
 };
@@ -383,7 +383,7 @@ const showRoute = function (url) {
       if (json === undefined
         || json.plans === undefined
         || json.plans.length === 0) {
-        displayCustomMessage('No available rotes found.');
+        displayCustomMessage('No available rotes found');
       } else {
         insertRouteElements(json.plans);
         setRecommendedRoute();
@@ -428,13 +428,13 @@ const validateSelectedPlaces = function () {
   const destinationPlace = destinationsListElemet.querySelector('.selected');
 
   if (originPlace === null || destinationPlace === null) {
-    displayCustomMessage('Both origin and destination points should be selected.');
+    displayCustomMessage('Both origin and destination locations should be selected');
     return false;
   }
 
   if (originPlace.dataset.long === destinationPlace.dataset.long
     && originPlace.dataset.lat === destinationPlace.dataset.lat) {
-    displayCustomMessage('Different starting and destination locations need to be chosen.');
+    displayCustomMessage('Different starting and destination locations need to be chosen');
     return false;
   }
 
@@ -445,8 +445,6 @@ const validateSelectedPlaces = function () {
  * Event Listener for Plan My Trip button
  */
 planTripElement.addEventListener('click', function () {
-  // If there isn't at least 1 starting location and 1 destination selected, clicking the plan my trip button should display an appropriate message to the user. 
-  // If locations are the same - message that you choose the same start and finish points
   hideFilterButtons();
   if (validateSelectedPlaces()) {
     const url = getTripPlannerURL();
