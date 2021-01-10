@@ -69,7 +69,7 @@ function fetchJSON(url) {
     .then(resp => {
       if (resp.ok) {
         return resp.json();
-      } else {
+      } else if (resp.status !== 404) {
         throw new Error(`Status - #${resp.status}; status message - ${resp.statusText}.`);
       }
     })
@@ -242,10 +242,10 @@ destinationsListElemet.addEventListener('click', function (event) {
 /**
  * Method to display 'No Routes Found' error message
  */
-const displayNoRoutesFoundMessage = function () {
+const displayCustomMessage = function (message) {
   busContainerElement.innerHTML =
     `<div style="padding:10px;">
-        <p>No available routes found.</p>
+        <p>${message}</p>
         <p>Please, try again.</p>
     </div>`;
 };
@@ -383,9 +383,8 @@ const showRoute = function (url) {
       if (json === undefined
         || json.plans === undefined
         || json.plans.length === 0) {
-        displayNoRoutesFoundMessage();
+        displayCustomMessage('No available rotes found.');
       } else {
-        console.log(json);
         insertRouteElements(json.plans);
         setRecommendedRoute();
         showFilterButtons();
@@ -422,15 +421,38 @@ const getTripPlannerURL = function () {
 };
 
 /**
+ * Method to validate Selected Places 
+ */
+const validateSelectedPlaces = function () {
+  const originPlace = originsListElemet.querySelector('.selected');
+  const destinationPlace = destinationsListElemet.querySelector('.selected');
+
+  if (originPlace === null || destinationPlace === null) {
+    displayCustomMessage('Both origin and destination points should be selected.');
+    return false;
+  }
+
+  if (originPlace.dataset.long === destinationPlace.dataset.long
+    && originPlace.dataset.lat === destinationPlace.dataset.lat) {
+    displayCustomMessage('Different starting and destination locations need to be chosen.');
+    return false;
+  }
+
+  return true;
+};
+
+/**
  * Event Listener for Plan My Trip button
  */
 planTripElement.addEventListener('click', function () {
   // If there isn't at least 1 starting location and 1 destination selected, clicking the plan my trip button should display an appropriate message to the user. 
   // If locations are the same - message that you choose the same start and finish points
-  const url = getTripPlannerURL();
-  clearElementHTML(busContainerElement);
   hideFilterButtons();
-  showRoute(url);
+  if (validateSelectedPlaces()) {
+    const url = getTripPlannerURL();
+    clearElementHTML(busContainerElement);
+    showRoute(url);
+  }
 });
 
 /**
@@ -566,7 +588,7 @@ const showMinWalkTrips = function () {
       minWalk = trip.dataset.durationwalking;
     }
   });
-  
+
   myTripElements.forEach(trip => {
     if (trip.dataset.durationwalking === minWalk) {
       trip.classList.remove('hide');
