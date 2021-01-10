@@ -9,7 +9,7 @@ body {
   font-family: sans-serif;
 }
 
-body > * {
+body>* {
   padding: 5px;
 }
 
@@ -19,18 +19,18 @@ ul {
   padding: 0;
 }
 
-.origins > li, .destinations > li {
+.origins>li, .destinations>li {
   padding: 20px 20px;
   border: 1px solid #d3d3d3;
   margin: 5px 0;
 }
 
-.origins > li:hover, .destinations > li:hover{
+.origins>li:hover, .destinations>li:hover {
   background-color: #efefef;
   cursor: pointer;
 }
 
-.origins > li.selected, .destinations > li.selected {
+.origins>li.selected, .destinations>li.selected {
   background-color: #f2f3ff;
 }
 
@@ -59,11 +59,22 @@ input:focus {
   color: white;
   cursor: pointer;
   width: 100%;
+  margin-bottom: 30px;
+}
+
+.all-trips {
+  background: #2db8ca;
+}
+
+.best-trip {
+  background: #48c72f;
 }
 
 .my-trip {
   width: 75%;
   margin: auto;
+  margin-bottom: 60px;
+  padding: 7px;
 }
 
 .my-trip li {
@@ -76,4 +87,20 @@ input:focus {
   margin-right: 15px;
   font-size: 25px;
   align-self: center;
+}
+
+.hide {
+  display: none;
+}
+
+.recommended-border {
+  border: #48c72f 1px solid;
+}
+
+.min-transfer-trip, .min-walk-trip, .min-time-trip{
+  background: #647dad;
+}
+
+.filters-container{
+  margin-top: 40px;
 }
