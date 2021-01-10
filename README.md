@@ -1,2 +1,4 @@
 # winnipeg-transit-light
-Light vession of Winnipeg Transit app
+Light vession of the Winnipeg Transit 
+
+https://winnipeg-transit-light.netlify.app/
